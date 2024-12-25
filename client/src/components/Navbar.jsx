@@ -1,5 +1,6 @@
 import React from 'react'
 import { assets } from '../assets/assets/assets'
+import { useClerk, UserButton, useUser } from '@clerk/clerk-react'
 
 const Navbar = () => {
   return (
