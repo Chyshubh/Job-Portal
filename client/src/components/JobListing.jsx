@@ -74,36 +74,41 @@ const JobListing = () => {
                 </div>
 
                 {/* Job Listing */}
-                <section className='w-full lg:w=3/4 text-gray-600 max-lg:px-4'>
-                    <h3 className="font-mediumntext-3xl py-2" id='job-list'>Latest Jobs</h3>
-                    <p className="mb-8">Get your desired job from top companies</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                        {jobs.slice((currentPage - 1) * 6, currentPage * 6).map((job, index) => (
-                            <JobCart key={index} job={job} />
-                        ))}
-                    </div>
-                    {/* Pagenation */}
-                    {
-                        jobs.length > 0 && (
-                            <div className="flex items-center justify-center space-x-2 mt-10">
-                                <a href="#job-list" className="">
-                                    <img onClick={()=> setCurrentPage(Math.max(currentPage-1,1))} src={assets.left_arrow_icon} alt="" className="" />
-                                </a>
-                                {
-                                    Array.from({ length: Math.ceil(jobs.length / 6) }).map((_, index) => (
-                                        <a href="#job-list" className="">
-                                            <button onClick={() => setCurrentPage(index + 1)} className={`w-10 h-10 flex items-center justify-center border border-gray-300 rounded ${currentPage === index + 1 ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}`}>{index + 1}</button>
-                                        </a>
-                                    ))
-                                }
-                                <a href="#job-list" className="">
-                                    <img onClick={() => setCurrentPage(Math.min(currentPage + 1, Math.ceil(jobs.length / 6)))}
- src={assets.right_arrow_icon} alt="" className="" />
-                                </a>
-                            </div>
-                        )
-                    }
-                </section>
+                <section className="w-full lg:w-3/4 text-gray-600 px-4">
+    <h3 className="font-medium text-3xl py-2" id="job-list">Latest Jobs</h3>
+    <p className="mb-8">Get your desired job from top companies</p>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+        {jobs.slice((currentPage - 1) * 6, currentPage * 6).map((job) => (
+            <JobCart key={job.id} job={job} className="w-full h-full flex flex-col justify-between p-4 bg-white rounded-lg shadow-lg" />
+        ))}
+    </div>
+    {/* Pagination */}
+    {jobs.length > 0 && (
+        <div className="flex items-center justify-center space-x-2 mt-10">
+            <button 
+                onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))} 
+                className="p-2">
+                <img src={assets.left_arrow_icon} alt="Previous Page" />
+            </button>
+            {Array.from({ length: Math.ceil(jobs.length / 6) }).map((_, index) => (
+                <button 
+                    key={index} 
+                    onClick={() => setCurrentPage(index + 1)} 
+                    className={`w-10 h-10 flex items-center justify-center border border-gray-300 rounded ${currentPage === index + 1 ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}`}>
+                    {index + 1}
+                </button>
+            ))}
+            <button 
+                onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(jobs.length / 6)))} 
+                className="p-2">
+                <img src={assets.right_arrow_icon} alt="Next Page" />
+            </button>
+        </div>
+    )}
+</section>
+
+
+
             </div>
         </div>
     )
