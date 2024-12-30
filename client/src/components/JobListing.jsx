@@ -31,9 +31,9 @@ const JobListing = () => {
 
         const matchesLocation = job => selectedLocation.length === 0 || selectedLocation.includes(job.location);
 
-        const matchesTItles = job => searchFilter.title === "" || job.title.toLoweCase().includes(searchFilter.title.toLoweCase())
+        const matchesTItles = job => searchFilter.title === "" || job.title.toLowerCase().includes(searchFilter.title.toLowerCase())
 
-        const matchesSearchLocation = job => searchFilter.location === "" || job.location.toLoweCase().includes(searchFilter.location.toLoweCase());
+        const matchesSearchLocation = job => searchFilter.location === "" || job.location.toLowerCase().includes(searchFilter.location.toLowerCase());
 
         const newFilteredJobs = jobs.slice().reverse().filter(
             job => matchesCategory(job) && matchesLocation(job) && matchesTItles(job) && matchesSearchLocation(job)
@@ -134,7 +134,7 @@ const JobListing = () => {
                 </div>
 
                 {/* Pagination */}
-                {jobs.length > 0 && (
+                {filteredJobs.length > 0 && (
                     <div className="flex items-center justify-center mt-10">
                         <button
                             onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
@@ -142,7 +142,7 @@ const JobListing = () => {
                         >
                             <img src={assets.left_arrow_icon} alt="Previous Page" />
                         </button>
-                        {Array.from({ length: Math.ceil(jobs.length / 6) }).map((_, index) => (
+                        {Array.from({ length: Math.ceil(filteredJobs.length / 6) }).map((_, index) => (
                             <button
                                 key={index}
                                 onClick={() => setCurrentPage(index + 1)}
@@ -153,7 +153,7 @@ const JobListing = () => {
                             </button>
                         ))}
                         <button
-                            onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(jobs.length / 6)))}
+                            onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(filteredJobs.length / 6)))}
                             className="p-2"
                         >
                             <img src={assets.right_arrow_icon} alt="Next Page" />

@@ -1,7 +1,10 @@
 import React from 'react'
 import { assets } from '../assets/assets/assets'
+import { useNavigate } from 'react-router-dom';
 
 const JobCart = ({ job }) => {
+
+  const navigate = useNavigate();
     if (!job) {
         return <div>Loading...</div>;  // Loading state
       }
@@ -20,8 +23,8 @@ const JobCart = ({ job }) => {
         </div>
         <p className='text-gray-500 text-sm mt-4' dangerouslySetInnerHTML={{__html:(job.description || "").slice(0, 150)}}></p>
         <div className="mt-4 flex gap-4 text-sm">
-            <button className="bg-blue-600 text-white px-4 py-2 rounded">Apply Now</button>
-            <button className="border border-gray-500 text-gray-500 px-4 py-2 rounded">Learn More</button>
+            <button onClick={()=>{navigate(`/apply-jobs/${job._id}`); scrollTo(0,0)}} className="bg-blue-600 text-white px-4 py-2 rounded">Apply Now</button>
+            <button onClick={()=>{navigate(`/apply-jobs/${job._id}`); scrollTo(0,0)}} className="border border-gray-500 text-gray-500 px-4 py-2 rounded">Learn More</button>
         </div>
     </div>
   )
