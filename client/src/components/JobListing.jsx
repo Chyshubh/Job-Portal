@@ -6,8 +6,12 @@ import JobCart from './JobCart';
 const JobListing = () => {
   const { searchFilter, isSearched, setSearchFilter, jobs } = useContext(AppContext);
 
-  const [showFilter, setShowFilter] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
+
+  const [filteredJobs, setFilteredJobs] = useState(jobs);
 
   return (
     <div className="container mx-auto px-6 lg:px-20 flex flex-col lg:flex-row max-lg:space-y-8 py-8">
