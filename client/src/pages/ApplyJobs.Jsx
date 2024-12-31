@@ -6,7 +6,9 @@ import Loadiing from '../components/Loadiing';
 import Navbar from '../components/Navbar';
 import { assets } from '../assets/assets/assets';
 import kconvert from 'k-convert';
-import moment from 'moment'
+import moment from 'moment';
+import JobCart from '../components/JobCart';
+import Footer from '../components/Footer';
 
 
 const ApplyJobs = () => {
@@ -33,27 +35,28 @@ const ApplyJobs = () => {
   return jobData ? (
     <>
       <Navbar/>
-      <div className="">
-        <div className="">
-          <div className="">
-            <div className="">
-              <img src={jobData.companyId.image} alt="" className="" />
-              <div className="">
-                <h1 className="">{jobData.title}</h1>
-                <div className="">
-                  <span className="">
+
+      <div className="min-h-screen flex flex-col py-10 container px-4 2xl:px-20 mx-auto">
+        <div className="bg-white text-b rounded-lg w-full">
+          <div className=" flex justify-center md:justify-between flex-wrap gap-8 px-14 py-20 mb-6 bg-sky-50 border border-sky-400 rounded-xl">
+            <div className="flex flex-col md:flex-row items-center">
+              <img  src={jobData.companyId.image} alt="" className="h-24 bg-white roun p-4 mr-4 max-md:mb-4 border" />
+              <div className="text-center md:text-left text-neutral-700">
+                <h1 className="text-2xl sm:text-4xl font-medium">{jobData.title}</h1>
+                <div className="flex flex-row flex-wrap max-md:justify-center gap-y-2 gap-6 items-center text-gray-600 mt-2">
+                  <span className="flex items-center gap-1">
                     <img src={assets.suitcase_icon} alt="" className="" />
                     {jobData.companyId.name}
                   </span>
-                  <span>
+                  <span className="flex items-center gap-1">
                     <img src={assets.location_icon} alt="" className="" />
                     {jobData.location}
                   </span>
-                  <span>
+                  <span className="flex items-center gap-1">
                     <img src={assets.person_icon} alt="" className="" />
                     {jobData.level}
                   </span>
-                  <span>
+                  <span className="flex items-center gap-1">
                     <img src={assets.money_icon} alt="" className="" />
                     CTC: {kconvert.convertTo(jobData.salary)}
                   </span>
@@ -61,13 +64,33 @@ const ApplyJobs = () => {
               </div>
             </div>
 
-            <div className="">
-              <button>Apply Now</button>
-              <p className="">Posted {moment(jobData.data).fromNow()}</p>
+            <div className="flex flex-col justify-center text-end text-sm max-md:mx-auto max-md:text-center">
+              <button className='bg-blue-600 p-2.5 px-10 text-white rounded'>Apply Now</button>
+              <p className="mt-1 text-gray-600">Posted {moment(jobData.date).fromNow()}</p>
+            </div>
+
+          </div>
+
+          <div className="flex flex-col lg:flex-row justify-between items-start">
+            <div className="w-full lg:w-2/3">
+                <h2 className="font-bold text-2xl mb-4">Job description</h2>
+                <div className="rich-text" dangerouslySetInnerHTML={{__html:jobData.description}}></div>
+                <button className='bg-blue-600 p-2.5 px-10 text-white rounded mt-10'>Apply Now</button>
+            </div>
+            {/*Right Section More Jobs */}
+            <div className="w-full lg:1/3 mt-8 lg:mt-0 lg:ml-8 space-y-5">
+              <h2 className="">More Jobs from {jobData.companyId.name}</h2>
+              {
+                jobs.filter(job => job._id !== jobData._id && job.companyId._id === jobData.companyId._id)
+                .filter(job=> true).slice(0,4)
+                .map((job,index)=> <JobCart key={index} job={job}/>)
+              }
             </div>
           </div>
+
         </div>
       </div>
+      <Footer/>
     </>
   ) : (
       <Loadiing/> 
