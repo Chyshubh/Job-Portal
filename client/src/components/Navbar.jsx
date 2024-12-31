@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { assets } from '../assets/assets/assets';
 import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
 import {Link, useNavigate} from 'react-router-dom';
+import AppContext from '../context/AppContext';
 
 const Navbar = () => {
 
@@ -9,6 +10,8 @@ const Navbar = () => {
   const { user } = useUser();
 
   const navigate = useNavigate();
+
+  const {setShowRLogin} = useContext(AppContext);
 
   return (
     <div className='shadow py-4'>
@@ -23,7 +26,7 @@ const Navbar = () => {
             <UserButton/>
           </div>
             : <div className='flex gap-4 max-sm:text-xs'>
-              <button className='text-gray-600 '>Recruiter Login</button>
+              <button onClick={e=>setShowRLogin(true)} className='text-gray-600 '>Recruiter Login</button>
               <button onClick={e => openSignIn()} className='bg-blue-600 text-white px-6 sm:px-9 py-2 rounded-full'>Login</button>
             </div>
         }
