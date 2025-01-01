@@ -5,6 +5,10 @@ import Applications from './pages/Applications.jsx'
 import ApplyJobs from './pages/ApplyJobs.Jsx'
 import RecruiterLogin from './components/RecruiterLogin.jsx'
 import AppContext from './context/AppContext.jsx'
+import DashBoard from './pages/DashBoard.jsx'
+import AddJob from './pages/AddJob.jsx'
+import ManageJobs from './pages/ManageJobs.jsx'
+import ViewApplications from './pages/ViewApplications.jsx'
 
 const App = () => {
   const{showRLogin} = useContext(AppContext);
@@ -15,7 +19,11 @@ const App = () => {
       <Route path='/' element={<Home />} />
       <Route path='/apply-jobs/:id' element={<ApplyJobs/>} />
       <Route  path='/applications' element={<Applications />} />
-
+      <Route path='dashboard' element={<DashBoard/>}>
+      <Route path='add-job' element={<AddJob/>} />
+      <Route path='Manage-jobs' element={<ManageJobs/>} />
+      <Route path='view-applications' element={<ViewApplications/>} />
+      </Route>
     </Routes>
     </div>
   )
