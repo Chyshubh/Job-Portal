@@ -5,6 +5,7 @@ import { protectCompany } from '../middleware/Auth.js';
 
 
 
+
 const router = express.Router();
 
 //Register a Company
@@ -20,10 +21,10 @@ router.post('/company',protectCompany, getCompanyData);
 router.post('/post-job',protectCompany, postNewJob);
 
 //Get Applicants Data of Company
-router.post('/applicants',protectCompany, getCompanyJobApplicants);
+router.get('/applicants',protectCompany, getCompanyJobApplicants);
 
 //Get Company job list
-router.post('/list-jobs',protectCompany, getCompanyPostedJobs);
+router.get('/list-jobs',protectCompany, getCompanyPostedJobs);
 
 //Change application status
 router.post('/change-status',protectCompany, changeStatus)

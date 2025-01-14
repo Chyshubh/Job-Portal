@@ -85,6 +85,16 @@ export const loginCompany = async (req, res) => {
 //Get Company Data
 export const getCompanyData = async (req, res) => {
 
+    try {
+        
+        const company = req.company;
+        res.json({success: true, company})
+
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
+
 }
 
 //Post a new job
@@ -121,12 +131,28 @@ export const postNewJob = async (req, res) => {
 
 //Get Company Job Applicants
 export const getCompanyJobApplicants = async (req, res) => {
+   
+    
 
 }
 
 //Get Company Posted Jobs
 export const getCompanyPostedJobs = async (req, res) => {
 
+    try {
+        
+        const companyId = req.company._id;
+
+        const jobs = await JobModel.find({companyId});
+
+        //ToDo Adding No. of aplicants info in data
+
+        res.json({success:true, jobsData: jobs})
+
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
 }
 
 //Change Job Application Status
@@ -137,4 +163,28 @@ export const changeStatus = async (req, res) => {
 //Change Job Visiblity
 export const changeVisiblity = async (req, res) => {
 
+    try {
+        
+        const {id} = req.body;
+        if (!req.company) {
+            return res.status(401).json({ success: false, message: "Unauthorized access" });
+          }
+
+        const companyId = req.company._id;
+
+        const job = await JobModel.findById(id)
+
+        if (companyId.toString() === job.companyId.toString()) {
+            job.visible = !job.visible;
+        }
+
+        await job.save();
+
+        res.json({success:true, job})
+
+
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
 }
