@@ -166,13 +166,24 @@ export const changeVisiblity = async (req, res) => {
     try {
         
         const {id} = req.body;
-        if (!req.company) {
-            return res.status(401).json({ success: false, message: "Unauthorized access" });
-          }
+
+         // Validate input
+    if (!id) {
+        return res.status(400).json({ success: false, message: "Job ID is required." });
+      }
+  
+      // Check authorization
+      if (!req.company) {
+        return res.status(401).json({ success: false, message: "Unauthorized access." });
+      }
 
         const companyId = req.company._id;
 
-        const job = await JobModel.findById(id)
+        const job = await JobModel.findById(id);
+
+        if (!job) {
+            return res.status(404).json({ success: false, message: "Job not found." });
+          }
 
         if (companyId.toString() === job.companyId.toString()) {
             job.visible = !job.visible;
