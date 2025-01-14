@@ -6,6 +6,7 @@ import connectDB from './config/db.js'
 import * as Sentry from "@sentry/node"
 import { clerkWebhooks } from './controllers/WebHook.js'
 import CompanyRoutes from './routes/CompanyRoutes.js'
+import JobRoutes from './routes/JobRoutes.js'
 import connectCloudinary from './config/cloudinary.js'
 
 // Initialize Express
@@ -25,7 +26,8 @@ app.get("/debug-sentry", function mainHandler(req, res) {
     throw new Error("My first Sentry error!");
   });
 app.post('/webhooks',clerkWebhooks);
-app.use('/api/company',CompanyRoutes)
+app.use('/api/company',CompanyRoutes);
+app.use('/api/jobs',JobRoutes)
 
 //Port
 const PORT = process.env.PORT ||1000;
