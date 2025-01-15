@@ -7,6 +7,7 @@ import * as Sentry from "@sentry/node"
 import { clerkWebhooks } from './controllers/WebHook.js'
 import CompanyRoutes from './routes/CompanyRoutes.js'
 import UserRoutes from './routes/UserRoutes.js'
+import JobRoutes from './routes/JobRoutes.js'
 import { clerkMiddleware } from '@clerk/express'
 
 import connectCloudinary from './config/cloudinary.js'
@@ -21,7 +22,7 @@ await connectCloudinary();
 //middlewares
 app.use(cors());
 app.use(express.json());
-app.use(clerkWebhooks())
+app.use(clerkMiddleware())
 
 //Routes
 app.get('/', (req,res)=> res.send("API Working"))
