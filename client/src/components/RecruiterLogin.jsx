@@ -25,12 +25,19 @@ const RecruiterLogin = () => {
             
             if (state === "Login") {
                 
-                const {data} = await axios.post(backendUrl+'api/company/login',{email,password});
+                const { data } = await axios.post(`${backendUrl}api/company/login`, { email, password });
+
+
+                console.log(data)
+                if (data.success) {
+                    console.log(data)
+                }
 
             }
 
         } catch (error) {
-            
+            console.error("Axios request failed:", error);
+    alert(error.response?.data?.message || "An error occurred");
         }
 
     }
