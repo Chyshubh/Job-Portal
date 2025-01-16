@@ -3,6 +3,7 @@ import { v2 as cloudinary } from "cloudinary";
 import CompanyModel from '../models/CompanyModel.js';
 import generateToken from '../utils/generateToken.js';
 import JobModel from '../models/JobModel.js';
+import JobApplicationModel from '../models/JobApplicationModel.js';
 
 
 //Register a new Company
@@ -145,9 +146,13 @@ export const getCompanyPostedJobs = async (req, res) => {
 
         const jobs = await JobModel.find({companyId});
 
-        //ToDo Adding No. of aplicants info in data
+        //Adding No. of aplicants info in data
+        const jobsData = await Promise.all(jobs.map(async (job) => {
+            const applicants = await JobApplicationModel.find({jobId: job._id});
+            return{...job.toObject(),applicants:applicants.length}
+        }))
 
-        res.json({success:true, jobsData: jobs})
+        res.json({success:true, jobsData})
 
     } catch (error) {
         console.log(error)

@@ -20,7 +20,7 @@ export const getJobById = async (req,res) => {
     try {
 
         const {id} = req.params;
-        const job = await job.findById(id)
+        const job = await JobModel.findById(id)
         .populate({
             path: 'companyId',
             select: '-password'

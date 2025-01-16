@@ -1,6 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Quill from 'quill'
 import { JobCategories, JobLocations } from '../assets/assets/assets';
+import axios from 'axios';
+import AppContext from '../context/AppContext';
+import { toast } from 'react-toastify';
 
 const AddJob = () => {
 
@@ -13,8 +16,31 @@ const AddJob = () => {
     const editorRef = useRef(null);
     const quillref = useRef(null)
 
-    const onSubmitHandler = () => {
+    const {backendUrl, companyToken} = useContext(AppContext);
+
+    const onSubmitHandler = async (e) => {
         e.preventDefault();
+
+        try {
+            
+          const endpoint =`${backendUrl}/api/company/post-job`
+
+            const description = quillref.current.root.innerHTML
+
+            const {data} = await axios.post(endpoint,{title, description,location, category,salary,level},{headers: {token: companyToken}});
+
+            if(data.success) {
+                toast.success(data.message);
+                setTitle('');
+                setSalary(0);
+                quillref.current.root.innerHTML =""
+            } else{
+                toast.error(data.message)
+            }
+
+        } catch (error) {
+            toast.error(error.message)
+        }
     }
 
     useEffect(() => {
