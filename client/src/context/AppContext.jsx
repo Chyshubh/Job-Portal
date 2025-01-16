@@ -24,12 +24,51 @@ export const AppContextProvider = (props)=>{
         setJobs(jobsData);
     }
 
+    //Function to fetch company daata
+    const fetchCompanyData = async () => {
+        try {
+        const endpoint = `${backendUrl}/api/company/company`;
+
+        const {data} = await axios.get(endpoint,{headers: {token: companyToken} });
+
+        if (data.success) {
+            setCompanyData(data.company)
+            console.log(data);
+            
+        }else{
+            toast.error(data.message)
+        }
+
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     useEffect(()=>{
         fetchjobsData();
+
+        const storedCompanyToken =  localStorage.getItem('companyToken')
+
+        if (storedCompanyToken) {
+            setCompanyToken(storedCompanyToken)
+        }
     },[])
 
+    useEffect(()=>{
+        if(companyToken){
+            fetchCompanyData();
+        }
+    },[companyToken])
+
+
     const value ={
-        searchFilter, setSearchFilter, isSearched, setIsSearched,jobs, setJobs,fetchjobsData, showRLogin, setShowRLogin, companyData, setCompanyData,companyToken, setCompanyToken, backendUrl
+        searchFilter, setSearchFilter, 
+        isSearched, setIsSearched,
+        jobs, setJobs,fetchjobsData, 
+        showRLogin, setShowRLogin, 
+        companyData, setCompanyData,
+        companyToken, setCompanyToken, 
+        backendUrl
     }
     return(<AppContext.Provider value={value}>
         {props.children}
