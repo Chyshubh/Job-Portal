@@ -31,6 +31,10 @@ export const AppContextProvider = (props) => {
 
         try {
             const endpoint = `${backendUrl}/api/jobs`
+
+            const token = await getToken();
+            console.log("Token retrieved from Clerk:", token);
+
             const { data } = await axios.get(endpoint)
 
             if (data.success) {
@@ -68,24 +72,24 @@ export const AppContextProvider = (props) => {
     }
 
     // Function to fetch user data
-const fetchUserData = async () => {
-    try {
-        const endpoint = `${backendUrl}/api/users/user`; // Update URL if needed
-        const token = await getToken(); // Retrieve token from Clerk
+    const fetchUserData = async () => {
+        try {
+            const endpoint = `${backendUrl}/api/users/user`; // Update URL if needed
+            const token = await getToken(); // Retrieve token from Clerk
 
-        const { data } = await axios.get(endpoint, { headers: { Authorization: `Bearer ${token}` } });
+            const { data } = await axios.get(endpoint, { headers: { Authorization: `Bearer ${token}` } });
 
-        if (data.success) {
-            setUserData(data.user); // Set user data in state
-        } else {
-            toast.error(data.message); // Display the error message from the backend
+            if (data.success) {
+                setUserData(data.user); // Set user data in state
+            } else {
+                toast.error(data.message); // Display the error message from the backend
+            }
+
+        } catch (error) {
+            console.error("Error fetching user data:", error.message);
+            toast.error(error.message || "An unexpected error occurred.");
         }
-
-    } catch (error) {
-        console.error("Error fetching user data:", error.message);
-        toast.error(error.message || "An unexpected error occurred.");
-    }
-};
+    };
 
     useEffect(() => {
         fetchjobsData();
