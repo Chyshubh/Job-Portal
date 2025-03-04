@@ -21,7 +21,7 @@ const app = express();
 await connectDB();
 await connectCloudinary();
 
-//middlewares
+//Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(clerkMiddleware());
