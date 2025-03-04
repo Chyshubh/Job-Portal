@@ -9,9 +9,6 @@ import CompanyRoutes from './routes/CompanyRoutes.js'
 import UserRoutes from './routes/UserRoutes.js'
 import JobRoutes from './routes/JobRoutes.js'
 import { clerkMiddleware, requireAuth } from '@clerk/express'
-
-
-
 import connectCloudinary from './config/cloudinary.js'
 
 //Initialize Express
