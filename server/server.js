@@ -14,7 +14,7 @@ import { clerkMiddleware, requireAuth } from '@clerk/express'
 
 import connectCloudinary from './config/cloudinary.js'
 
-// Initialize Express
+//Initialize Express
 const app = express();
 
 //Connect to database
