@@ -11,7 +11,6 @@ import JobRoutes from './routes/JobRoutes.js'
 import { clerkMiddleware, requireAuth } from '@clerk/express'
 import connectCloudinary from './config/cloudinary.js'
 
-
 //Initialize Express
 const app = express();
 
