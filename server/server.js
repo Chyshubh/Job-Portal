@@ -18,6 +18,8 @@ const app = express();
 await connectDB();
 await connectCloudinary();
 
+
+
 //Middlewares
 app.use(cors());
 app.use(express.json());
