@@ -15,8 +15,9 @@ export const AppContextProvider = (props) => {
         title: "",
         location: ""
     });
-    
 
+
+    
     const [isSearched, setIsSearched] = useState(false);
     const [jobs, setJobs] = useState([]);
     const [showRLogin, setShowRLogin] = useState(false);
